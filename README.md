@@ -8,7 +8,7 @@ files over MoldUDP protocol.
 To install the simulator:
 
 ```
-$ go get github.com/penberg/nasdaq-omx-simulator
+$ go get github.com/hirakujira/nasdaq-omx-simulator
 ```
 
 ## Usage

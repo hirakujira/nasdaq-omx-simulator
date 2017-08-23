@@ -3,7 +3,7 @@ package main
 
 import (
 	"bytes"
-	"code.google.com/p/go.net/ipv4"
+	"golang.org/x/net/ipv4"
 	"encoding/binary"
 	"flag"
 	"fmt"
@@ -74,7 +74,7 @@ func main() {
 	}
 
 	seqNo := uint32(0)
-	offset := 0
+	offset := 2
 	nowSeconds := uint64(0)
 	nowMilliseconds := uint64(0)
 	for {
@@ -125,14 +125,22 @@ func main() {
 				size = int(unsafe.Sizeof(Seconds{}))
 			case 'M':
 				size = int(unsafe.Sizeof(Milliseconds{}))
-			case 'O':
-				size = int(unsafe.Sizeof(MarketSegmentState{}))
 			case 'S':
 				size = int(unsafe.Sizeof(SystemEvent{}))
 			case 'R':
-				size = int(unsafe.Sizeof(OrderBookDirectory{}))
+				size = int(unsafe.Sizeof(StockDirectory{}))
 			case 'H':
-				size = int(unsafe.Sizeof(OrderBookTradingAction{}))
+				size = int(unsafe.Sizeof(StockTradingAction{}))
+			case 'Y':
+				size = int(unsafe.Sizeof(RegSHORestriction{}))
+			case 'L':
+				size = int(unsafe.Sizeof(MarketPartcipantPOS{}))
+			case 'V':
+				size = int(unsafe.Sizeof(MWCBDeclineLevel{}))
+			case 'W':
+				size = int(unsafe.Sizeof(MWCBStatus{}))
+			case 'K':
+				size = int(unsafe.Sizeof(IPOQuotingPeriodUpdate{}))
 			case 'A':
 				size = int(unsafe.Sizeof(AddOrder{}))
 			case 'F':
@@ -145,6 +153,8 @@ func main() {
 				size = int(unsafe.Sizeof(OrderCancel{}))
 			case 'D':
 				size = int(unsafe.Sizeof(OrderDelete{}))
+			case 'U':
+				size = int(unsafe.Sizeof(OrderReplace{}))
 			case 'P':
 				size = int(unsafe.Sizeof(Trade{}))
 			case 'Q':
@@ -153,8 +163,10 @@ func main() {
 				size = int(unsafe.Sizeof(BrokenTrade{}))
 			case 'I':
 				size = int(unsafe.Sizeof(NOII{}))
+			case 'N':
+				size = int(unsafe.Sizeof(RPII{}))
 			default:
-				fmt.Printf("Unknown message type: '%c' (%x)\n", ch, ch)
+				fmt.Printf("Unknown message type: '%c' (%x), offset %d\n", ch, ch, offset)
 				os.Exit(1)
 			}
 			msgBlock := MoldUDPMessageBlock{

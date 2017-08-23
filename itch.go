@@ -21,125 +21,226 @@ type Milliseconds struct {
 
 type SystemEvent struct {
 	MsgType   byte
+	StockLocate [2]byte
+	TrackingNumber [2]byte
+	Timestamp [6]byte
 	EventCode byte
 }
 
-type MarketSegmentState struct {
-	MsgType         byte
-	MarketSegmentID [3]byte
-	EventCode       byte
+type StockDirectory struct {
+	MsgType                     byte
+	StockLocate                 [2]byte
+	TrackingNumber              [2]byte
+	Timestamp                   [6]byte
+	Stock                       [8]byte
+	MarketCategory              byte
+	FinancialStatusIndicator    byte
+	RoundLotSize                [4]byte
+	RoundLotsOnly               byte
+	IssueClassification         byte
+	IssueSubtype                [2]byte
+	Authenticity                byte
+	ShortSaleThresholdIndicator byte
+	IPOFlag                     byte
+	LULDReferencePriceTier      byte
+	ETPFlag                     byte
+	ETPLeverageFactor           [4]byte
+	InverseIndicator            byte
 }
 
-type OrderBookDirectory struct {
-	MsgType          byte
-	OrderBook        [6]byte
-	Symbol           [16]byte
-	ISIN             [12]byte
-	FinancialProduct [3]byte
-	TradingCurrency  [3]byte
-	MIC              [4]byte
-	MarketSegmentID  [3]byte
-	NoteCodes        [8]byte
-	RoundLotSize     [9]byte
+type StockTradingAction struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	Stock              [8]byte
+	TradingState       byte
+	Reserved           byte
+	Reason             [4]byte
 }
 
-type OrderBookTradingAction struct {
-	MsgType      byte
-	OrderBook    [6]byte
-	TradingState byte
-	Reserved     byte
-	Reason       [4]byte
+type RegSHORestriction struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	Stock              [8]byte
+	RegSHOAction       byte
+}
+
+type MarketPartcipantPOS struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	MPID               [4]byte
+	Stock              [8]byte
+	PrimaryMarketMaker byte
+	MarketMakerMode    byte
+	MarketPartcipantS  byte
+}
+
+type MWCBDeclineLevel struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	Level1 	           [8]byte
+	Level2 	           [8]byte
+	Level3 	           [8]byte
+}
+
+type MWCBStatus struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	BreachedLevel      byte
+}
+
+type IPOQuotingPeriodUpdate struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	Stock              [8]byte
+	IPOQuotationRelT   [4]byte
+	IPOQuotationRelQ   byte
+	IPOPrice           [4]byte
 }
 
 type AddOrder struct {
-	MsgType              byte
-	OrderReferenceNumber [9]byte
-	BuySellIndicator     byte
-	Quantity             [9]byte
-	OrderBook            [6]byte
-	Price                [10]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OrderReferenceNum  [8]byte
+	BuySellIndicator   byte
+	Shares             [4]byte
+	Stock              [8]byte
+	Price              [4]byte
 }
 
 type AddOrderMPID struct {
-	MsgType              byte
-	OrderReferenceNumber [9]byte
-	BuySellIndicator     byte
-	Quantity             [9]byte
-	OrderBook            [6]byte
-	Price                [10]byte
-	Attribution          [4]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OrderReferenceNum  [8]byte
+	BuySellIndicator   byte
+	Shares             [4]byte
+	Stock              [8]byte
+	Price              [4]byte
+	Attribution        [4]byte
 }
 
 type OrderExecuted struct {
-	MsgType                   byte
-	OrderReferenceNumber      [9]byte
-	ExecutedQuantity          [9]byte
-	MatchNumber               [9]byte
-	OwnerParticipantID        [4]byte
-	CounterpartyParticipantID [4]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OrderReferenceNum  [8]byte
+	ExecutedShares     [4]byte
+	MatchNumber        [8]byte
 }
 
 type OrderExecutedWithPrice struct {
-	MsgType                   byte
-	OrderReferenceNumber      [9]byte
-	ExecutedQuantity          [9]byte
-	MatchNumber               [9]byte
-	Printable                 byte
-	TradePrice                [10]byte
-	OwnerParticipantID        [4]byte
-	CounterpartyParticipantID [4]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OrderReferenceNum  [8]byte
+	ExecutedShares     [4]byte
+	MatchNumber        [8]byte
+	Printable          byte
+	ExecutionPrice     [4]byte
 }
 
 type OrderCancel struct {
-	MsgType              byte
-	OrderReferenceNumber [9]byte
-	CanceledQuantity     [9]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OrderReferenceNum  [8]byte
+	CanceledShares     [4]byte
 }
 
 type OrderDelete struct {
-	MsgType              byte
-	OrderReferenceNumber [9]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OrderReferenceNum  [8]byte
+}
+
+
+type OrderReplace struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OriginalOrderRefN  [8]byte
+	NewOrderRefN       [8]byte
+	Shares             [4]byte
+	Price              [8]byte
 }
 
 type Trade struct {
-	MsgType                   byte
-	OrderReferenceNumber      [9]byte
-	TradeType                 byte
-	Quantity                  [9]byte
-	OrderBook                 [6]byte
-	MatchNumber               [9]byte
-	TradePrice                [10]byte
-	OwnerParticipantID        [4]byte
-	CounterpartyParticipantID [4]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	OrderReferenceNum  [8]byte
+	BuySellIndicator   byte
+	Shares             [4]byte
+	Stock              [8]byte
+	Price              [4]byte
+	MatchNumber        [8]byte
 }
 
 type CrossTrade struct {
-	MsgType        byte
-	Quantity       [9]byte
-	OrderBook      [6]byte
-	CrossPrice     [10]byte
-	MatchNumber    [9]byte
-	CrossType      byte
-	NumberOfTrades [10]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	Shares             [8]byte
+	Stock              [8]byte
+	CrossPrice         [4]byte
+	MatchNumber        [8]byte
+	CrossType          byte
 }
 
 type BrokenTrade struct {
-	MsgType     byte
-	MatchNumber [9]byte
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	MatchNumber        [8]byte
 }
 
 type NOII struct {
 	MsgType            byte
-	PairedQuantity     [9]byte
-	ImbalanceQuantity  [9]byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	PairedShares       [8]byte
+	ImbalanceShares    [8]byte
 	ImbalanceDirection byte
-	OrderBook          [6]byte
-	EquilibriumPrice   [10]byte
+	Stock              [8]byte
+	FarPrice           [4]byte
+	NearPrice          [4]byte
+	CurrentReferenceP  [4]byte
 	CrossType          byte
-	BestBidPrice       [10]byte
-	BestBidQuantity    [9]byte
-	BestAskPrice       [10]byte
-	BestAskQuantity    [9]byte
+	PriceVariationIndi byte
+}
+
+type RPII struct {
+	MsgType            byte
+	StockLocate        [2]byte
+	TrackingNumber     [2]byte
+	Timestamp          [6]byte
+	Stock              [8]byte
+	InterestFlag       byte
 }
 
 func ItchUatoi(buf []byte, len int) uint64 {
