@@ -182,7 +182,7 @@ type OrderReplace struct {
 	OriginalOrderRefN  [8]byte
 	NewOrderRefN       [8]byte
 	Shares             [4]byte
-	Price              [8]byte
+	Price              [4]byte
 }
 
 type Trade struct {
